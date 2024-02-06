@@ -947,7 +947,7 @@ public class ShareController extends TelegramViewController<ShareController.Args
     headerCell.initWithMargin(Screen.dp(56f) * getMenuItemCount(), false);
     headerCell.setThemedTextColor(ColorId.text, ColorId.textLight, this);
     updateHeader();
-    if (Settings.instance().chatFoldersEnabled() && TD.isChatListMain(displayingChatList) && tdlib.chatFoldersCount() > 0) {
+    if (Settings.instance().chatFoldersEnabled() && TD.isChatListMain(displayingChatList) && tdlib.chatFolderCount() > 0) {
       headerCell.setTitle(R.string.CategoryMain);
       headerCell.setTitleIcon(R.drawable.baseline_keyboard_arrow_down_20);
       headerCell.setOnClickListener(v -> {
@@ -3175,9 +3175,9 @@ public class ShareController extends TelegramViewController<ShareController.Args
 
   private boolean isSent;
   private final boolean rememberOptions = MoexConfig.rememberOptions;
-  private boolean needHideAuthor = rememberOptions && MoexConfig.rememberOptions_author;
-  private boolean needRemoveCaptions = rememberOptions && MoexConfig.rememberOptions_captions;
-  private boolean forceSendWithoutSound = rememberOptions && MoexConfig.rememberOptions_silent;
+  private boolean needHideAuthor = rememberOptions && MoexConfig.instance().getAuthorState();
+  private boolean needRemoveCaptions = rememberOptions && MoexConfig.instance().getCaptionState();
+  private boolean forceSendWithoutSound = rememberOptions && MoexConfig.instance().getSilentState();
 
   private void sendMessages (boolean forceGoToChat, boolean isSingleTap, @Nullable TdApi.MessageSendOptions finalSendOptions) {
     if (selectedChats.size() == 0 || isSent) {
